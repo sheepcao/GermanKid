@@ -14,6 +14,7 @@
 #import "TestTableViewController.h"
 #import "CAPSPageMenu.h"
 #import "topBarView.h"
+#import "categoryView.h"
 
 
 
@@ -62,10 +63,10 @@
     
     ///////////////////////////////////
     
-    UIView *categoryView = [[UIView alloc] initWithFrame:CGRectMake(0, _cycleBannerViewTop.frame.size.height, SCREEN_WIDTH, categoryViewHeight)];
-    categoryView.backgroundColor = [UIColor greenColor];
     
-    [self.mainScroll addSubview:categoryView];
+    categoryView *categories = [[categoryView alloc] initWithFrame:CGRectMake(0, _cycleBannerViewTop.frame.size.height, SCREEN_WIDTH, categoryViewHeight)];
+    
+    [self.mainScroll addSubview:categories];
     
     ///////////////////////////
     

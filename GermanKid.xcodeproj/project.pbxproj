@@ -32,6 +32,8 @@
 		A43B148E1C50E16A006017CC /* TestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B148C1C50E16A006017CC /* TestTableViewController.m */; };
 		A43B148F1C50E16A006017CC /* TestTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A43B148D1C50E16A006017CC /* TestTableViewController.xib */; };
 		A43B14971C51FAD0006017CC /* topBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B14961C51FAD0006017CC /* topBarView.m */; };
+		A469772F1C522C6F008DC7B3 /* categoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A469772E1C522C6F008DC7B3 /* categoryView.m */; };
+		A46977311C522DDC008DC7B3 /* boy.png in Resources */ = {isa = PBXBuildFile; fileRef = A46977301C522DDC008DC7B3 /* boy.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,9 @@
 		A43B148D1C50E16A006017CC /* TestTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestTableViewController.xib; sourceTree = "<group>"; };
 		A43B14951C51FAD0006017CC /* topBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = topBarView.h; path = ../../GermanKid_test/GermanKid/topBarView.h; sourceTree = "<group>"; };
 		A43B14961C51FAD0006017CC /* topBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = topBarView.m; path = ../../GermanKid_test/GermanKid/topBarView.m; sourceTree = "<group>"; };
+		A469772D1C522C6F008DC7B3 /* categoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = categoryView.h; sourceTree = "<group>"; };
+		A469772E1C522C6F008DC7B3 /* categoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = categoryView.m; sourceTree = "<group>"; };
+		A46977301C522DDC008DC7B3 /* boy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boy.png; sourceTree = "<group>"; };
 		DAE603BBA9D2E73F807CDE65 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0182633510C694EF72A60FE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +173,8 @@
 				A41C959C1C4E33F700241BD8 /* 3rdParty */,
 				A43B14951C51FAD0006017CC /* topBarView.h */,
 				A43B14961C51FAD0006017CC /* topBarView.m */,
+				A469772D1C522C6F008DC7B3 /* categoryView.h */,
+				A469772E1C522C6F008DC7B3 /* categoryView.m */,
 				A43B14711C50AD86006017CC /* globalVar.h */,
 				A41C95681C4E32E100241BD8 /* AppDelegate.h */,
 				A41C95691C4E32E100241BD8 /* AppDelegate.m */,
@@ -189,6 +196,7 @@
 		A41C95651C4E32E100241BD8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A46977301C522DDC008DC7B3 /* boy.png */,
 				A43B14681C4F4E69006017CC /* image1.jpg */,
 				A43B146A1C4F538B006017CC /* image2.png */,
 				A43B14781C50BA0D006017CC /* prod1.jpg */,
@@ -374,6 +382,7 @@
 				A43B14691C4F4E69006017CC /* image1.jpg in Resources */,
 				A41C95721C4E32E100241BD8 /* Assets.xcassets in Resources */,
 				A43B147D1C50BA0D006017CC /* prod2.jpg in Resources */,
+				A46977311C522DDC008DC7B3 /* boy.png in Resources */,
 				A43B14771C50B35E006017CC /* productTableViewCell.xib in Resources */,
 				A43B147F1C50BA0D006017CC /* prod4.jpg in Resources */,
 				A43B147C1C50BA0D006017CC /* prod1.jpg in Resources */,
@@ -454,6 +463,7 @@
 				A43B146F1C50A6C7006017CC /* topTableViewCell.m in Sources */,
 				A43B148A1C50E0D1006017CC /* CAPSPageMenu.m in Sources */,
 				A43B14761C50B35E006017CC /* productTableViewCell.m in Sources */,
+				A469772F1C522C6F008DC7B3 /* categoryView.m in Sources */,
 				A41C956D1C4E32E100241BD8 /* ViewController.m in Sources */,
 				A43B14671C4E3E06006017CC /* HMSegmentedControl.m in Sources */,
 				A43B148E1C50E16A006017CC /* TestTableViewController.m in Sources */,
