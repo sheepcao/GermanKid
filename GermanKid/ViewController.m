@@ -15,6 +15,7 @@
 #import "CAPSPageMenu.h"
 #import "topBarView.h"
 #import "categoryView.h"
+#import "detailViewController.h"
 
 
 
@@ -65,6 +66,7 @@
     
     
     categoryView *categories = [[categoryView alloc] initWithFrame:CGRectMake(0, _cycleBannerViewTop.frame.size.height, SCREEN_WIDTH, categoryViewHeight)];
+    [categories.firstBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.mainScroll addSubview:categories];
     
@@ -123,6 +125,13 @@
 
     }
 
+}
+
+-(void)categoryTap:(UIButton *)sender
+{
+    detailViewController *detailVC = [[detailViewController alloc] initWithNibName:@"detailViewController" bundle:nil];
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
 }
 
 

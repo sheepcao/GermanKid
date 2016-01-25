@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'F6131DC085D1F1F201B3D2F5'
+               BlueprintIdentifier = '33B153FA2F9FCEA4CBB603B5'
                BlueprintName = 'KDCycleBannerView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libKDCycleBannerView.a'>

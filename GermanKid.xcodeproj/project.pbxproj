@@ -38,6 +38,9 @@
 		A46977361C55CA12008DC7B3 /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = A46977351C55CA12008DC7B3 /* liked.png */; };
 		A469773B1C55F0D6008DC7B3 /* taobaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A46977391C55F0D6008DC7B3 /* taobaoViewController.m */; };
 		A469773C1C55F0D6008DC7B3 /* taobaoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */; };
+		A46977411C56089F008DC7B3 /* detailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A469773F1C56089F008DC7B3 /* detailViewController.m */; };
+		A46977421C56089F008DC7B3 /* detailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A46977401C56089F008DC7B3 /* detailViewController.xib */; };
+		A46977461C5608E6008DC7B3 /* HFStretchableTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46977451C5608E6008DC7B3 /* HFStretchableTableHeaderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +110,11 @@
 		A46977381C55F0D6008DC7B3 /* taobaoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = taobaoViewController.h; sourceTree = "<group>"; };
 		A46977391C55F0D6008DC7B3 /* taobaoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = taobaoViewController.m; sourceTree = "<group>"; };
 		A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = taobaoViewController.xib; sourceTree = "<group>"; };
+		A469773E1C56089F008DC7B3 /* detailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailViewController.h; sourceTree = "<group>"; };
+		A469773F1C56089F008DC7B3 /* detailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailViewController.m; sourceTree = "<group>"; };
+		A46977401C56089F008DC7B3 /* detailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailViewController.xib; sourceTree = "<group>"; };
+		A46977441C5608E6008DC7B3 /* HFStretchableTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFStretchableTableHeaderView.h; sourceTree = "<group>"; };
+		A46977451C5608E6008DC7B3 /* HFStretchableTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFStretchableTableHeaderView.m; sourceTree = "<group>"; };
 		DAE603BBA9D2E73F807CDE65 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0182633510C694EF72A60FE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -192,6 +200,9 @@
 				A46977381C55F0D6008DC7B3 /* taobaoViewController.h */,
 				A46977391C55F0D6008DC7B3 /* taobaoViewController.m */,
 				A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */,
+				A469773E1C56089F008DC7B3 /* detailViewController.h */,
+				A469773F1C56089F008DC7B3 /* detailViewController.m */,
+				A46977401C56089F008DC7B3 /* detailViewController.xib */,
 				A43B14721C50B322006017CC /* Cells */,
 				A41C956E1C4E32E100241BD8 /* Main.storyboard */,
 				A41C95711C4E32E100241BD8 /* Assets.xcassets */,
@@ -240,6 +251,7 @@
 		A41C959C1C4E33F700241BD8 /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				A46977431C5608E6008DC7B3 /* stretchTableHeader */,
 				A43B14871C50E0D1006017CC /* Obj-C Classes */,
 				A43B14641C4E3E06006017CC /* HMSegmentedControl */,
 				A43B14801C50C449006017CC /* menuSrollView.h */,
@@ -288,6 +300,15 @@
 				A469772E1C522C6F008DC7B3 /* categoryView.m */,
 			);
 			name = customViews;
+			sourceTree = "<group>";
+		};
+		A46977431C5608E6008DC7B3 /* stretchTableHeader */ = {
+			isa = PBXGroup;
+			children = (
+				A46977441C5608E6008DC7B3 /* HFStretchableTableHeaderView.h */,
+				A46977451C5608E6008DC7B3 /* HFStretchableTableHeaderView.m */,
+			);
+			path = stretchTableHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,6 +431,7 @@
 				A43B14771C50B35E006017CC /* productTableViewCell.xib in Resources */,
 				A43B147F1C50BA0D006017CC /* prod4.jpg in Resources */,
 				A43B147C1C50BA0D006017CC /* prod1.jpg in Resources */,
+				A46977421C56089F008DC7B3 /* detailViewController.xib in Resources */,
 				A469773C1C55F0D6008DC7B3 /* taobaoViewController.xib in Resources */,
 				A41C95701C4E32E100241BD8 /* Main.storyboard in Resources */,
 			);
@@ -488,10 +510,12 @@
 				A43B146F1C50A6C7006017CC /* topTableViewCell.m in Sources */,
 				A43B148A1C50E0D1006017CC /* CAPSPageMenu.m in Sources */,
 				A43B14761C50B35E006017CC /* productTableViewCell.m in Sources */,
+				A46977461C5608E6008DC7B3 /* HFStretchableTableHeaderView.m in Sources */,
 				A469772F1C522C6F008DC7B3 /* categoryView.m in Sources */,
 				A41C956D1C4E32E100241BD8 /* ViewController.m in Sources */,
 				A43B14671C4E3E06006017CC /* HMSegmentedControl.m in Sources */,
 				A43B148E1C50E16A006017CC /* TestTableViewController.m in Sources */,
+				A46977411C56089F008DC7B3 /* detailViewController.m in Sources */,
 				A41C956A1C4E32E100241BD8 /* AppDelegate.m in Sources */,
 				A43B14971C51FAD0006017CC /* topBarView.m in Sources */,
 				A469773B1C55F0D6008DC7B3 /* taobaoViewController.m in Sources */,

@@ -9,12 +9,13 @@
 #import "taobaoViewController.h"
 #import "globalVar.h"
 #import "topBarView.h"
+#import "MBProgressHUD.h"
 
 @interface taobaoViewController ()<UIWebViewDelegate>
 
 @property (nonatomic,strong) UIWebView *webview;
 @property (nonatomic,strong) topBarView *topBar;
-
+@property (nonatomic,strong) MBProgressHUD *hud;
 @end
 
 @implementation taobaoViewController
@@ -52,6 +53,11 @@
     NSURL *url = [[NSURL alloc] initWithString:path];
     [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
     [self.view addSubview:self.webview];
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.hud.mode = MBProgressHUDModeAnnularDeterminate;
+    self.hud.labelText = @"加载中...";
+    [self.hud hide:YES afterDelay:2.3f];
+
     
 }
 
@@ -63,15 +69,20 @@
 -(void)closeTap
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+
 }
 
 -(void)webViewDidStartLoad:(UIWebView *)webView{
 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+   
     NSLog(@"webViewDidStartLoad");
 }
 -(void)webViewDidFinishLoad{
-[
- [UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+
+
+    [self.hud hide:YES];
+    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     NSLog(@"webViewDidFinishLoad");
 
 }
