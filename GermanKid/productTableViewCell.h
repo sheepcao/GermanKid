@@ -9,11 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface productTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *prodImage;
-@property (weak, nonatomic) IBOutlet UIImageView *productImage;
+@property (weak, nonatomic) IBOutlet UIButton *prodButtonOne;
+@property (weak, nonatomic) IBOutlet UIImageView *productImageOne;
+@property (weak, nonatomic) IBOutlet UILabel *prodNameOne;
+@property (weak, nonatomic) IBOutlet UILabel *prodOneLikeNumber;
 
-@property (weak, nonatomic) IBOutlet UILabel *productName;
-@property (weak, nonatomic) IBOutlet UILabel *buyLabel;
-@property (weak, nonatomic) IBOutlet UIButton *voteButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView *productImageTwo;
+@property (weak, nonatomic) IBOutlet UIButton *prodButtonTwo;
+@property (weak, nonatomic) IBOutlet UILabel *prodNameTwo;
+@property (weak, nonatomic) IBOutlet UILabel *prodTwoLikeNumber;
+
 
 @end

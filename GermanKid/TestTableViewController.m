@@ -10,6 +10,8 @@
 #import "productTableViewCell.h"
 #import "globalVar.h"
 
+#import "taobaoViewController.h"
+
 @interface TestTableViewController ()<UIScrollViewDelegate>
 @property (nonatomic) NSArray *prodArray;
 @end
@@ -52,9 +54,14 @@
     
     NSString *prodName = [NSString stringWithFormat:@"%@.jpg",self.prodArray[indexPath.row]];
     
-    [prodCell.productImage setImage:[UIImage imageNamed:prodName]];
-    [prodCell.prodImage addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
-    prodCell.prodImage.tag = indexPath.row;
+    [prodCell.productImageOne setImage:[UIImage imageNamed:prodName]];
+    [prodCell.prodButtonOne addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
+    prodCell.prodButtonOne.tag = indexPath.row*2;
+    
+    [prodCell.productImageTwo setImage:[UIImage imageNamed:prodName]];
+    [prodCell.prodButtonTwo addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
+    prodCell.prodButtonTwo.tag = indexPath.row*2+1;
+    
     return prodCell;
 }
 
@@ -66,7 +73,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y<= 0) {
+    if (scrollView.contentOffset.y<= 0.01) {
         
         [self.tableView setScrollEnabled:NO];
         [self.scrollDelegate enableScroll];
@@ -76,5 +83,10 @@
 -(void)prodTapped:(UIButton *)sender
 {
     NSLog(@"product tapped:%lu",sender.tag);
+    
+    taobaoViewController *taobaoView = [[taobaoViewController alloc] initWithNibName:@"taobaoViewController" bundle:nil];
+    [self.view.window.rootViewController presentViewController:taobaoView animated:YES completion:nil];
+
+//    [self.navigationController pushViewController:taobaoView animated:YES];
 }
 @end

@@ -34,6 +34,10 @@
 		A43B14971C51FAD0006017CC /* topBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B14961C51FAD0006017CC /* topBarView.m */; };
 		A469772F1C522C6F008DC7B3 /* categoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A469772E1C522C6F008DC7B3 /* categoryView.m */; };
 		A46977311C522DDC008DC7B3 /* boy.png in Resources */ = {isa = PBXBuildFile; fileRef = A46977301C522DDC008DC7B3 /* boy.png */; };
+		A46977341C55C998008DC7B3 /* like.png in Resources */ = {isa = PBXBuildFile; fileRef = A46977331C55C998008DC7B3 /* like.png */; };
+		A46977361C55CA12008DC7B3 /* liked.png in Resources */ = {isa = PBXBuildFile; fileRef = A46977351C55CA12008DC7B3 /* liked.png */; };
+		A469773B1C55F0D6008DC7B3 /* taobaoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A46977391C55F0D6008DC7B3 /* taobaoViewController.m */; };
+		A469773C1C55F0D6008DC7B3 /* taobaoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +102,11 @@
 		A469772D1C522C6F008DC7B3 /* categoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = categoryView.h; sourceTree = "<group>"; };
 		A469772E1C522C6F008DC7B3 /* categoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = categoryView.m; sourceTree = "<group>"; };
 		A46977301C522DDC008DC7B3 /* boy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boy.png; sourceTree = "<group>"; };
+		A46977331C55C998008DC7B3 /* like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = like.png; sourceTree = "<group>"; };
+		A46977351C55CA12008DC7B3 /* liked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liked.png; sourceTree = "<group>"; };
+		A46977381C55F0D6008DC7B3 /* taobaoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = taobaoViewController.h; sourceTree = "<group>"; };
+		A46977391C55F0D6008DC7B3 /* taobaoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = taobaoViewController.m; sourceTree = "<group>"; };
+		A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = taobaoViewController.xib; sourceTree = "<group>"; };
 		DAE603BBA9D2E73F807CDE65 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0182633510C694EF72A60FE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,10 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				A41C959C1C4E33F700241BD8 /* 3rdParty */,
-				A43B14951C51FAD0006017CC /* topBarView.h */,
-				A43B14961C51FAD0006017CC /* topBarView.m */,
-				A469772D1C522C6F008DC7B3 /* categoryView.h */,
-				A469772E1C522C6F008DC7B3 /* categoryView.m */,
+				A46977321C55BF73008DC7B3 /* customViews */,
 				A43B14711C50AD86006017CC /* globalVar.h */,
 				A41C95681C4E32E100241BD8 /* AppDelegate.h */,
 				A41C95691C4E32E100241BD8 /* AppDelegate.m */,
@@ -183,6 +189,9 @@
 				A43B148B1C50E16A006017CC /* TestTableViewController.h */,
 				A43B148C1C50E16A006017CC /* TestTableViewController.m */,
 				A43B148D1C50E16A006017CC /* TestTableViewController.xib */,
+				A46977381C55F0D6008DC7B3 /* taobaoViewController.h */,
+				A46977391C55F0D6008DC7B3 /* taobaoViewController.m */,
+				A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */,
 				A43B14721C50B322006017CC /* Cells */,
 				A41C956E1C4E32E100241BD8 /* Main.storyboard */,
 				A41C95711C4E32E100241BD8 /* Assets.xcassets */,
@@ -196,6 +205,8 @@
 		A41C95651C4E32E100241BD8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A46977331C55C998008DC7B3 /* like.png */,
+				A46977351C55CA12008DC7B3 /* liked.png */,
 				A46977301C522DDC008DC7B3 /* boy.png */,
 				A43B14681C4F4E69006017CC /* image1.jpg */,
 				A43B146A1C4F538B006017CC /* image2.png */,
@@ -266,6 +277,17 @@
 				A43B14891C50E0D1006017CC /* CAPSPageMenu.m */,
 			);
 			path = "Obj-C Classes";
+			sourceTree = "<group>";
+		};
+		A46977321C55BF73008DC7B3 /* customViews */ = {
+			isa = PBXGroup;
+			children = (
+				A43B14951C51FAD0006017CC /* topBarView.h */,
+				A43B14961C51FAD0006017CC /* topBarView.m */,
+				A469772D1C522C6F008DC7B3 /* categoryView.h */,
+				A469772E1C522C6F008DC7B3 /* categoryView.m */,
+			);
+			name = customViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,8 +398,10 @@
 			files = (
 				A41C95751C4E32E100241BD8 /* LaunchScreen.storyboard in Resources */,
 				A43B14701C50A6C7006017CC /* topTableViewCell.xib in Resources */,
+				A46977361C55CA12008DC7B3 /* liked.png in Resources */,
 				A43B147E1C50BA0D006017CC /* prod3.jpg in Resources */,
 				A43B148F1C50E16A006017CC /* TestTableViewController.xib in Resources */,
+				A46977341C55C998008DC7B3 /* like.png in Resources */,
 				A43B146B1C4F538B006017CC /* image2.png in Resources */,
 				A43B14691C4F4E69006017CC /* image1.jpg in Resources */,
 				A41C95721C4E32E100241BD8 /* Assets.xcassets in Resources */,
@@ -386,6 +410,7 @@
 				A43B14771C50B35E006017CC /* productTableViewCell.xib in Resources */,
 				A43B147F1C50BA0D006017CC /* prod4.jpg in Resources */,
 				A43B147C1C50BA0D006017CC /* prod1.jpg in Resources */,
+				A469773C1C55F0D6008DC7B3 /* taobaoViewController.xib in Resources */,
 				A41C95701C4E32E100241BD8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +494,7 @@
 				A43B148E1C50E16A006017CC /* TestTableViewController.m in Sources */,
 				A41C956A1C4E32E100241BD8 /* AppDelegate.m in Sources */,
 				A43B14971C51FAD0006017CC /* topBarView.m in Sources */,
+				A469773B1C55F0D6008DC7B3 /* taobaoViewController.m in Sources */,
 				A41C95671C4E32E100241BD8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

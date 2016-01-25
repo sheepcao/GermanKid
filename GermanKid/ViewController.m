@@ -71,12 +71,12 @@
     ///////////////////////////
     
     
-    
     self.controllerArray = [[NSMutableArray alloc] init];
     for (int i = 0; i<menuTitles.count; i++) {
         TestTableViewController *controller = [[TestTableViewController alloc]initWithNibName:@"TestTableViewController" bundle:nil];
         controller.title = menuTitles[i];
         controller.scrollDelegate = self;
+        
         
         [self.controllerArray addObject:controller];
     }
@@ -97,6 +97,7 @@
     _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:self.controllerArray frame:CGRectMake(0.0, _cycleBannerViewTop.frame.size.height+categoryViewHeight, SCREEN_WIDTH, SCREEN_HEIGHT-64) options:parameters];
 
 
+    
     
     TestTableViewController *listControllerNow = self.controllerArray[self.pageMenu.currentPageIndex];
     [listControllerNow.tableView setScrollEnabled:NO];
