@@ -11,34 +11,40 @@
 #import "menuSrollView.h"
 #import "topTableViewCell.h"
 #import "productTableViewCell.h"
-#import "TestTableViewController.h"
-#import "CAPSPageMenu.h"
 #import "topBarView.h"
 #import "categoryView.h"
 #import "detailViewController.h"
+#import "taobaoViewController.h"
 
 
 
-@interface ViewController ()<KDCycleBannerViewDataSource, KDCycleBannerViewDelegate,UIScrollViewDelegate,scrollEnableDelegate>
+@interface ViewController ()<KDCycleBannerViewDataSource, KDCycleBannerViewDelegate,UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *prodArray;
+@property (nonatomic, strong) NSArray *menuArray;
+
 @property (nonatomic, strong) menuSrollView *menuScroll;
+@property (nonatomic, strong) menuSrollView *fakeScroll;
+
 
 @property (strong, nonatomic) KDCycleBannerView *cycleBannerViewTop;
-@property (nonatomic,strong) CAPSPageMenu *pageMenu;
 @property (nonatomic,strong) NSMutableArray *controllerArray;
 @property (nonatomic,strong) topBarView *topBar;
-
+@property (nonatomic,strong) UIView *headerView;
 @end
 
 @implementation ViewController
 
+int menuNow;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     self.prodArray = [[NSMutableArray alloc] initWithObjects:@"prod1",@"prod2",@"prod3",@"prod4",nil];
     
     NSArray *menuTitles = @[@"menu1",@"menu2",@"menu3",@"menu4",@"menu5",@"menu6",@"menu7",@"menu8"];
+    self.menuArray = menuTitles;
 
     self.navigationController.navigationBarHidden = YES;
     self.topBar = [[topBarView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
@@ -46,78 +52,21 @@
     self.topBar.alpha = 0.0f;
     [self.view addSubview:self.topBar];
     
-    
-    
-    
-    
-    _cycleBannerViewTop = [KDCycleBannerView new];
-    _cycleBannerViewTop.frame = CGRectMake(0,0, SCREEN_WIDTH, SCREEN_WIDTH/2);
-    _cycleBannerViewTop.datasource = self;
-    _cycleBannerViewTop.delegate = self;
-    _cycleBannerViewTop.continuous = YES;
-    _cycleBannerViewTop.autoPlayTimeInterval = 5;
-    
-    [self.mainScroll setContentSize:CGSizeMake(SCREEN_WIDTH, _cycleBannerViewTop.frame.size.height+categoryViewHeight+SCREEN_HEIGHT-44)];
-    self.mainScroll.delegate = self;
-    
-    [self.mainScroll addSubview:_cycleBannerViewTop];
-    
-    ///////////////////////////////////
-    
-    
-    categoryView *categories = [[categoryView alloc] initWithFrame:CGRectMake(0, _cycleBannerViewTop.frame.size.height, SCREEN_WIDTH, categoryViewHeight)];
-    [categories.firstBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.mainScroll addSubview:categories];
-    
-    ///////////////////////////
-    
-    
-    self.controllerArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i<menuTitles.count; i++) {
-        TestTableViewController *controller = [[TestTableViewController alloc]initWithNibName:@"TestTableViewController" bundle:nil];
-        controller.title = menuTitles[i];
-        controller.scrollDelegate = self;
-        
-        
-        [self.controllerArray addObject:controller];
-    }
-    NSDictionary *parameters = @{
-                                 CAPSPageMenuOptionScrollMenuBackgroundColor: [UIColor colorWithRed:242.0/255.0 green:242/255.0 blue:242/255.0 alpha:1.0],
-                                 CAPSPageMenuOptionViewBackgroundColor: [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0],
-                                 CAPSPageMenuOptionSelectionIndicatorColor: [UIColor colorWithRed:255/255.0 green:58/255.0 blue:61/255.0 alpha:1.0],
-                                 CAPSPageMenuOptionBottomMenuHairlineColor: [UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0],
-                                 CAPSPageMenuOptionSelectedMenuItemLabelColor: [UIColor colorWithRed:255/255.0 green:58/255.0 blue:61/255.0 alpha:1.0],
-                                 CAPSPageMenuOptionUnselectedMenuItemLabelColor:[UIColor colorWithRed:100/255.0 green:100/255.0 blue:100/255.0 alpha:1.0],
-                                 CAPSPageMenuOptionMenuItemFont: [UIFont fontWithName:@"HelveticaNeue" size:13.0],
-                                 CAPSPageMenuOptionMenuHeight: @(35.0),
-                                 CAPSPageMenuOptionMenuItemWidth: @(70.0),
-                                 CAPSPageMenuOptionCenterMenuItems: @(YES)
-                                 };
-    
-    
-    _pageMenu = [[CAPSPageMenu alloc] initWithViewControllers:self.controllerArray frame:CGRectMake(0.0, _cycleBannerViewTop.frame.size.height+categoryViewHeight, SCREEN_WIDTH, SCREEN_HEIGHT-64) options:parameters];
+    menuNow = 0;
 
 
     
-    
-    TestTableViewController *listControllerNow = self.controllerArray[self.pageMenu.currentPageIndex];
-    [listControllerNow.tableView setScrollEnabled:NO];
-    [self.mainScroll setScrollEnabled:YES];
-    
 
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 -(void)viewDidLayoutSubviews
 {
-    [self.mainScroll addSubview:_pageMenu.view];
     
     if (SCREEN_MAX_LENGTH>700) {
         
         [self.LeftDistance setConstant:-20];
         [self.rightDistance setConstant:-20];
-        [self.mainScroll setNeedsUpdateConstraints];
+        [self.mainTableView setNeedsUpdateConstraints];
         
 
         [self.view setNeedsUpdateConstraints];
@@ -140,7 +89,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+//
 #pragma mark - KDCycleBannerViewDataSource
 
 - (NSArray *)numberOfKDCycleBannerView:(KDCycleBannerView *)bannerView {
@@ -171,159 +120,261 @@
 }
 
 
-//
-//#pragma mark -
-//#pragma mark Table view delegate
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{    if (indexPath.section ==0) {
-//    return SCREEN_WIDTH/2+60;
-//}else
-//{
-//    return SCREEN_WIDTH/2+70;
-//}
-//}
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    if (section == 0) {
-//        return 0;
-//    }else
-//    {
-//        return 40;
-//    }
-//}
-//
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    
-//}
-//
-//
-//
-//
-//#pragma mark -
-//#pragma mark Table view data source
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView             // Default is 1 if not implemented
-//{
-//    return 2;
-//}
-//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    if(section == 0)
-//    {
-//        return nil;
-//    }else if (section == 1)
-//    {
-//        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-//
-//        
-//
-//        self.menuScroll = [[menuSrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-//        self.menuScroll.contentSize=CGSizeMake(500,40);
-//        
-//
-//        [self.menuScroll setupCategory:@[@"One", @"Two", @"Three",@"four",@"five",@"six"]];
-//
-//        for (UIView *subview in [self.menuScroll subviews]) {
-//            if ([subview isKindOfClass:[UIButton class]]) {
-//                UIButton *btn = (UIButton *)subview;
-//
-//                [btn addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventTouchUpInside];
-//
-//            }
-//        }
-//
-//        
-//        [headerView addSubview:self.menuScroll];
-//        
-//        return headerView;
-//    }else
-//        return nil;
-//}
-//
-//-(void)segmentedControlChangedValue:(UIButton *)sender
-//{
-//    NSLog(@"sender:%lu",sender.tag);
-//    [self.menuScroll scrollToPage:(sender.tag - 100)];
-//    
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return 1;
-//    }else
-//    {
-//        return self.prodArray.count;
-//    }
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.section == 0) {
-//        topTableViewCell *topCell =(topTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"topTableViewCell"];
-//        if (nil == topCell)
-//        {
-//            topCell = [[[NSBundle mainBundle]loadNibNamed:@"topTableViewCell" owner:self options:nil] objectAtIndex:0];//加载nib文件
-//            topCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            
-//            
-//            topCell.loopBanner.datasource = self;
-//            topCell.loopBanner.delegate = self;
-//        }
-//        
-//        
-//        return topCell;
-//        
-//    }else
-//    {
-//        productTableViewCell *prodCell =(productTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"productTableViewCell"];
-//        if (nil == prodCell)
-//        {
-//            prodCell = [[[NSBundle mainBundle]loadNibNamed:@"productTableViewCell" owner:self options:nil] objectAtIndex:0];//加载nib文件
-//            prodCell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        }
-//        
-//        NSString *prodName = [NSString stringWithFormat:@"%@.jpg",self.prodArray[indexPath.row]];
-//        [prodCell.productImage setImage:[UIImage imageNamed:prodName]];
-//        
-//        return prodCell;
-//    }
-//
-//}
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+#pragma mark -
+#pragma mark Table view delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{    if (indexPath.section ==0) {
+    return SCREEN_WIDTH/2+categoryViewHeight;
+}else
 {
-    NSLog(@"scrollView.contentOffset.y====:%f",scrollView.contentOffset.y);
-//    NSLog(@"_cycleBannerViewTop.frame.size.height+70====:%f",_cycleBannerViewTop.frame.size.height+70);
-    NSLog(@"mainscroll====:%@",self.mainScroll);
-
-
-    if (scrollView.contentOffset.y<_cycleBannerViewTop.frame.size.height+categoryViewHeight-44-44) {
-        
-    
-        
-        TestTableViewController *listControllerNow = self.controllerArray[self.pageMenu.currentPageIndex];
-        [listControllerNow.tableView setScrollEnabled:NO];
-        [self.mainScroll setScrollEnabled:YES];
-        self.topBar.alpha = scrollView.contentOffset.y/(_cycleBannerViewTop.frame.size.height+categoryViewHeight-44-44);
-
-
-        
+    return SCREEN_WIDTH/2+70;
+}
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0;
     }else
     {
-        [self.mainScroll setContentOffset:CGPointMake(0, _cycleBannerViewTop.frame.size.height+categoryViewHeight-44-44)];
-        
-        TestTableViewController *listControllerNow = self.controllerArray[self.pageMenu.currentPageIndex];
-        [listControllerNow.tableView setScrollEnabled:YES];
-        [self.mainScroll setScrollEnabled:NO];
-        self.topBar.alpha = 1.0f;
+        return 40;
     }
 }
 
 
--(void)enableScroll
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+}
+
+
+
+
+#pragma mark -
+#pragma mark Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView             // Default is 1 if not implemented
 {
-    [self.mainScroll setScrollEnabled:YES];
+    return 2;
+}
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section == 0)
+    {
+        return nil;
+    }else if (section == 1)
+    {
+       
+        
+
+        if (!self.headerView) {
+            self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+
+            self.menuScroll = [[menuSrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+            self.menuScroll.contentSize=CGSizeMake(700,40);
+            
+            
+            [self.menuScroll setupCategory:self.menuArray];
+            
+            
+            for (UIView *subview in [self.menuScroll subviews]) {
+                if ([subview isKindOfClass:[UIButton class]]) {
+                    UIButton *btn = (UIButton *)subview;
+                    
+                    [btn addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                }
+            }
+            
+            [self.headerView addSubview:self.menuScroll];
+            [self.menuScroll scrollToPage:menuNow];
+
+            
+        }
+
+        if (!self.fakeScroll) {
+            
+            self.fakeScroll = [[menuSrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 40)];
+            self.fakeScroll.contentSize=CGSizeMake(700,40);
+            
+            
+            [self.fakeScroll setupCategory:self.menuArray];
+            
+            for (UIView *subview in [self.fakeScroll subviews]) {
+                if ([subview isKindOfClass:[UIButton class]]) {
+                    UIButton *btn = (UIButton *)subview;
+                    
+                    [btn addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                }
+            }
+            
+            [self.view addSubview:self.fakeScroll];
+            [self.fakeScroll setHidden:YES];
+            [self.fakeScroll scrollToPage:menuNow];
+
+        }
+    
+
+        
+        
+        return self.headerView;
+    }else
+        return nil;
+}
+
+-(void)segmentedControlChangedValue:(UIButton *)sender
+{
+    NSLog(@"sender:%lu",sender.tag);
+    menuNow =sender.tag - 100;
+    [self.menuScroll scrollToPage:(sender.tag - 100)];
+    [self.fakeScroll scrollToPage:(sender.tag - 100)];
+    NSRange range = NSMakeRange(1, [self numberOfSectionsInTableView:self.mainTableView]-1);
+    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
+    [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
+
+    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (section == 0) {
+        return 1;
+    }else
+    {
+        return self.prodArray.count;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        topTableViewCell *topCell =(topTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"topTableViewCell"];
+        if (nil == topCell)
+        {
+            topCell = [[[NSBundle mainBundle]loadNibNamed:@"topTableViewCell" owner:self options:nil] objectAtIndex:0];//加载nib文件
+            topCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            
+            topCell.loopBanner.datasource = self;
+            topCell.loopBanner.delegate = self;
+            
+            categoryView *cateView = [[categoryView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, categoryViewHeight)];
+            [topCell.bottomView addSubview:cateView];
+            
+            [cateView.firstBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
+            [cateView.secondBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
+            [cateView.thirdBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
+            [cateView.forthBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
+
+
+            
+        }
+        
+        
+        return topCell;
+        
+    }else
+    {
+        productTableViewCell *prodCell =(productTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"productTableViewCell"];
+        if (nil == prodCell)
+        {
+            prodCell = [[[NSBundle mainBundle]loadNibNamed:@"productTableViewCell" owner:self options:nil] objectAtIndex:0];//加载nib文件
+            prodCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UISwipeGestureRecognizer *leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+            UISwipeGestureRecognizer *rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+            
+            leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+            rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+            
+            [self.view addGestureRecognizer:leftSwipeGestureRecognizer];
+            [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
+        }
+        
+
+        
+        NSString *prodName = [NSString stringWithFormat:@"%@.jpg",self.prodArray[indexPath.row]];
+        
+        [prodCell.productImageOne setImage:[UIImage imageNamed:prodName]];
+        [prodCell.prodButtonOne addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
+        prodCell.prodButtonOne.tag = indexPath.row*2;
+        
+        [prodCell.productImageTwo setImage:[UIImage imageNamed:prodName]];
+        [prodCell.prodButtonTwo addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
+        prodCell.prodButtonTwo.tag = indexPath.row*2+1;
+        
+        return prodCell;
+    }
 
 }
+-(void)prodTapped:(UIButton *)sender
+{
+    
+    NSLog(@"product tapped:%lu",sender.tag);
+    
+    taobaoViewController *taobaoView = [[taobaoViewController alloc] initWithNibName:@"taobaoViewController" bundle:nil];
+    [self.view.window.rootViewController presentViewController:taobaoView animated:YES completion:nil];
+    
+    //    [self.navigationController pushViewController:taobaoView animated:YES];
+}
+
+- (void)handleSwipes:(UISwipeGestureRecognizer *)sender
+{
+//    [self.mainTableView reloadData];
+    NSRange range = NSMakeRange(1, [self numberOfSectionsInTableView:self.mainTableView]-1);
+    NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
+
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
+        if (menuNow<self.menuArray.count-1) {
+            [self.menuScroll scrollToPage:(menuNow +1)];
+            [self.fakeScroll scrollToPage:(menuNow +1)];
+            menuNow++;
+            [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
+
+
+        }
+        
+
+    }
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
+       
+        if (menuNow>0) {
+            [self.menuScroll scrollToPage:(menuNow -1)];
+            [self.fakeScroll scrollToPage:(menuNow- 1)];
+            menuNow--;
+            [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
+
+        }
+        
+    }
+    
+}
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+
+
+    if (scrollView.contentOffset.y<SCREEN_WIDTH/2+categoryViewHeight-44-40) {
+        
+    
+        
+              self.topBar.alpha = scrollView.contentOffset.y/(SCREEN_WIDTH/2+categoryViewHeight-44-40);
+
+        [self.fakeScroll setHidden:YES];
+
+        
+    }else
+    {
+        [self.fakeScroll setHidden:NO];
+               self.topBar.alpha = 1.0f;
+    }
+}
+
+//
+//-(void)enableScroll
+//{
+//    [self.mainScroll setScrollEnabled:YES];
+//
+//}
 
 @end

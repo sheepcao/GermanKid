@@ -10,5 +10,6 @@
 #import "KDCycleBannerView.h"
 
 @interface topTableViewCell : UITableViewCell@property (weak, nonatomic) IBOutlet KDCycleBannerView *loopBanner;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 
 @end

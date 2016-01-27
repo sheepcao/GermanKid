@@ -41,9 +41,19 @@ double buttonWidth;
         if ([subview isKindOfClass:[UIButton class]]) {
             
             if (subview.tag == page+100) {
+                
+                
                 UIButton *btn = (UIButton *)subview;
                 [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-                [self setContentOffset:CGPointMake(buttonWidth*(page-1), 0)];
+
+                if (page ==0) {
+                    [self setContentOffset:CGPointMake(0, 0)];
+                }else
+                {
+                    [self setContentOffset:CGPointMake(buttonWidth*(page-1), 0)];
+                }
+                
+                
             }else
             {
                 UIButton *btn = (UIButton *)subview;

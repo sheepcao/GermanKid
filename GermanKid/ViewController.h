@@ -10,10 +10,11 @@
 #import "globalVar.h"
 
 @interface ViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIScrollView *mainScroll;
-
+//@property (weak, nonatomic) IBOutlet UIScrollView *mainScroll;
+//
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightDistance;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *LeftDistance;
+@property (weak, nonatomic) IBOutlet UITableView *mainTableView;
 
 @end
 

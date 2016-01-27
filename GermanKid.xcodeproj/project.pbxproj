@@ -16,7 +16,6 @@
 		A41C95751C4E32E100241BD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A41C95731C4E32E100241BD8 /* LaunchScreen.storyboard */; };
 		A41C95801C4E32E100241BD8 /* GermanKidTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41C957F1C4E32E100241BD8 /* GermanKidTests.m */; };
 		A41C958B1C4E32E100241BD8 /* GermanKidUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A41C958A1C4E32E100241BD8 /* GermanKidUITests.m */; };
-		A43B14671C4E3E06006017CC /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B14661C4E3E06006017CC /* HMSegmentedControl.m */; };
 		A43B14691C4F4E69006017CC /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A43B14681C4F4E69006017CC /* image1.jpg */; };
 		A43B146B1C4F538B006017CC /* image2.png in Resources */ = {isa = PBXBuildFile; fileRef = A43B146A1C4F538B006017CC /* image2.png */; };
 		A43B146F1C50A6C7006017CC /* topTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B146D1C50A6C7006017CC /* topTableViewCell.m */; };
@@ -28,9 +27,6 @@
 		A43B147E1C50BA0D006017CC /* prod3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A43B147A1C50BA0D006017CC /* prod3.jpg */; };
 		A43B147F1C50BA0D006017CC /* prod4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A43B147B1C50BA0D006017CC /* prod4.jpg */; };
 		A43B14821C50C449006017CC /* menuSrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B14811C50C449006017CC /* menuSrollView.m */; };
-		A43B148A1C50E0D1006017CC /* CAPSPageMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B14891C50E0D1006017CC /* CAPSPageMenu.m */; };
-		A43B148E1C50E16A006017CC /* TestTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B148C1C50E16A006017CC /* TestTableViewController.m */; };
-		A43B148F1C50E16A006017CC /* TestTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A43B148D1C50E16A006017CC /* TestTableViewController.xib */; };
 		A43B14971C51FAD0006017CC /* topBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = A43B14961C51FAD0006017CC /* topBarView.m */; };
 		A469772F1C522C6F008DC7B3 /* categoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = A469772E1C522C6F008DC7B3 /* categoryView.m */; };
 		A46977311C522DDC008DC7B3 /* boy.png in Resources */ = {isa = PBXBuildFile; fileRef = A46977301C522DDC008DC7B3 /* boy.png */; };
@@ -41,6 +37,8 @@
 		A46977411C56089F008DC7B3 /* detailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A469773F1C56089F008DC7B3 /* detailViewController.m */; };
 		A46977421C56089F008DC7B3 /* detailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A46977401C56089F008DC7B3 /* detailViewController.xib */; };
 		A46977461C5608E6008DC7B3 /* HFStretchableTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A46977451C5608E6008DC7B3 /* HFStretchableTableHeaderView.m */; };
+		A469774E1C576D31008DC7B3 /* detailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A469774C1C576D31008DC7B3 /* detailTableViewCell.m */; };
+		A469774F1C576D31008DC7B3 /* detailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A469774D1C576D31008DC7B3 /* detailTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,8 +76,6 @@
 		A41C95861C4E32E100241BD8 /* GermanKidUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GermanKidUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41C958A1C4E32E100241BD8 /* GermanKidUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GermanKidUITests.m; sourceTree = "<group>"; };
 		A41C958C1C4E32E100241BD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A43B14651C4E3E06006017CC /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
-		A43B14661C4E3E06006017CC /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
 		A43B14681C4F4E69006017CC /* image1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image1.jpg; sourceTree = "<group>"; };
 		A43B146A1C4F538B006017CC /* image2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image2.png; sourceTree = "<group>"; };
 		A43B146C1C50A6C7006017CC /* topTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = topTableViewCell.h; sourceTree = "<group>"; };
@@ -95,11 +91,6 @@
 		A43B147B1C50BA0D006017CC /* prod4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = prod4.jpg; sourceTree = "<group>"; };
 		A43B14801C50C449006017CC /* menuSrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuSrollView.h; sourceTree = "<group>"; };
 		A43B14811C50C449006017CC /* menuSrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuSrollView.m; sourceTree = "<group>"; };
-		A43B14881C50E0D1006017CC /* CAPSPageMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPSPageMenu.h; sourceTree = "<group>"; };
-		A43B14891C50E0D1006017CC /* CAPSPageMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CAPSPageMenu.m; sourceTree = "<group>"; };
-		A43B148B1C50E16A006017CC /* TestTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTableViewController.h; sourceTree = "<group>"; };
-		A43B148C1C50E16A006017CC /* TestTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTableViewController.m; sourceTree = "<group>"; };
-		A43B148D1C50E16A006017CC /* TestTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestTableViewController.xib; sourceTree = "<group>"; };
 		A43B14951C51FAD0006017CC /* topBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = topBarView.h; path = ../../GermanKid_test/GermanKid/topBarView.h; sourceTree = "<group>"; };
 		A43B14961C51FAD0006017CC /* topBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = topBarView.m; path = ../../GermanKid_test/GermanKid/topBarView.m; sourceTree = "<group>"; };
 		A469772D1C522C6F008DC7B3 /* categoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = categoryView.h; sourceTree = "<group>"; };
@@ -115,6 +106,9 @@
 		A46977401C56089F008DC7B3 /* detailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailViewController.xib; sourceTree = "<group>"; };
 		A46977441C5608E6008DC7B3 /* HFStretchableTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HFStretchableTableHeaderView.h; sourceTree = "<group>"; };
 		A46977451C5608E6008DC7B3 /* HFStretchableTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HFStretchableTableHeaderView.m; sourceTree = "<group>"; };
+		A469774B1C576D31008DC7B3 /* detailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailTableViewCell.h; sourceTree = "<group>"; };
+		A469774C1C576D31008DC7B3 /* detailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailTableViewCell.m; sourceTree = "<group>"; };
+		A469774D1C576D31008DC7B3 /* detailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = detailTableViewCell.xib; sourceTree = "<group>"; };
 		DAE603BBA9D2E73F807CDE65 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0182633510C694EF72A60FE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,9 +188,6 @@
 				A41C95691C4E32E100241BD8 /* AppDelegate.m */,
 				A41C956B1C4E32E100241BD8 /* ViewController.h */,
 				A41C956C1C4E32E100241BD8 /* ViewController.m */,
-				A43B148B1C50E16A006017CC /* TestTableViewController.h */,
-				A43B148C1C50E16A006017CC /* TestTableViewController.m */,
-				A43B148D1C50E16A006017CC /* TestTableViewController.xib */,
 				A46977381C55F0D6008DC7B3 /* taobaoViewController.h */,
 				A46977391C55F0D6008DC7B3 /* taobaoViewController.m */,
 				A469773A1C55F0D6008DC7B3 /* taobaoViewController.xib */,
@@ -252,21 +243,10 @@
 			isa = PBXGroup;
 			children = (
 				A46977431C5608E6008DC7B3 /* stretchTableHeader */,
-				A43B14871C50E0D1006017CC /* Obj-C Classes */,
-				A43B14641C4E3E06006017CC /* HMSegmentedControl */,
 				A43B14801C50C449006017CC /* menuSrollView.h */,
 				A43B14811C50C449006017CC /* menuSrollView.m */,
 			);
 			name = 3rdParty;
-			sourceTree = "<group>";
-		};
-		A43B14641C4E3E06006017CC /* HMSegmentedControl */ = {
-			isa = PBXGroup;
-			children = (
-				A43B14651C4E3E06006017CC /* HMSegmentedControl.h */,
-				A43B14661C4E3E06006017CC /* HMSegmentedControl.m */,
-			);
-			path = HMSegmentedControl;
 			sourceTree = "<group>";
 		};
 		A43B14721C50B322006017CC /* Cells */ = {
@@ -278,17 +258,11 @@
 				A43B14731C50B35E006017CC /* productTableViewCell.h */,
 				A43B14741C50B35E006017CC /* productTableViewCell.m */,
 				A43B14751C50B35E006017CC /* productTableViewCell.xib */,
+				A469774B1C576D31008DC7B3 /* detailTableViewCell.h */,
+				A469774C1C576D31008DC7B3 /* detailTableViewCell.m */,
+				A469774D1C576D31008DC7B3 /* detailTableViewCell.xib */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		A43B14871C50E0D1006017CC /* Obj-C Classes */ = {
-			isa = PBXGroup;
-			children = (
-				A43B14881C50E0D1006017CC /* CAPSPageMenu.h */,
-				A43B14891C50E0D1006017CC /* CAPSPageMenu.m */,
-			);
-			path = "Obj-C Classes";
 			sourceTree = "<group>";
 		};
 		A46977321C55BF73008DC7B3 /* customViews */ = {
@@ -421,7 +395,6 @@
 				A43B14701C50A6C7006017CC /* topTableViewCell.xib in Resources */,
 				A46977361C55CA12008DC7B3 /* liked.png in Resources */,
 				A43B147E1C50BA0D006017CC /* prod3.jpg in Resources */,
-				A43B148F1C50E16A006017CC /* TestTableViewController.xib in Resources */,
 				A46977341C55C998008DC7B3 /* like.png in Resources */,
 				A43B146B1C4F538B006017CC /* image2.png in Resources */,
 				A43B14691C4F4E69006017CC /* image1.jpg in Resources */,
@@ -429,6 +402,7 @@
 				A43B147D1C50BA0D006017CC /* prod2.jpg in Resources */,
 				A46977311C522DDC008DC7B3 /* boy.png in Resources */,
 				A43B14771C50B35E006017CC /* productTableViewCell.xib in Resources */,
+				A469774F1C576D31008DC7B3 /* detailTableViewCell.xib in Resources */,
 				A43B147F1C50BA0D006017CC /* prod4.jpg in Resources */,
 				A43B147C1C50BA0D006017CC /* prod1.jpg in Resources */,
 				A46977421C56089F008DC7B3 /* detailViewController.xib in Resources */,
@@ -508,13 +482,11 @@
 			files = (
 				A43B14821C50C449006017CC /* menuSrollView.m in Sources */,
 				A43B146F1C50A6C7006017CC /* topTableViewCell.m in Sources */,
-				A43B148A1C50E0D1006017CC /* CAPSPageMenu.m in Sources */,
 				A43B14761C50B35E006017CC /* productTableViewCell.m in Sources */,
 				A46977461C5608E6008DC7B3 /* HFStretchableTableHeaderView.m in Sources */,
 				A469772F1C522C6F008DC7B3 /* categoryView.m in Sources */,
 				A41C956D1C4E32E100241BD8 /* ViewController.m in Sources */,
-				A43B14671C4E3E06006017CC /* HMSegmentedControl.m in Sources */,
-				A43B148E1C50E16A006017CC /* TestTableViewController.m in Sources */,
+				A469774E1C576D31008DC7B3 /* detailTableViewCell.m in Sources */,
 				A46977411C56089F008DC7B3 /* detailViewController.m in Sources */,
 				A41C956A1C4E32E100241BD8 /* AppDelegate.m in Sources */,
 				A43B14971C51FAD0006017CC /* topBarView.m in Sources */,

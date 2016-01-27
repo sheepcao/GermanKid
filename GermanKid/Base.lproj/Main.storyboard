@@ -39,24 +39,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2QU-SQ-nSm">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Z90-EQ-1c5">
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                            </scrollView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="gd7-sF-cCj"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="1tO-TK-spV"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.87821237664473684" green="0.87821237664473684" blue="0.87417763157894723" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="2QU-SQ-nSm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-44" id="D0s-km-a8X"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2QU-SQ-nSm" secondAttribute="trailing" constant="-16" id="Dxo-Nt-XUN"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2QU-SQ-nSm" secondAttribute="bottom" id="oBn-fk-Gqg"/>
-                            <constraint firstItem="2QU-SQ-nSm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="wxW-3m-0tT"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Z90-EQ-1c5" secondAttribute="bottom" id="957-Zt-gaY"/>
+                            <constraint firstItem="Z90-EQ-1c5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-44" id="XVT-ip-XqE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Z90-EQ-1c5" secondAttribute="trailing" constant="-16" id="px3-nD-R2q"/>
+                            <constraint firstItem="Z90-EQ-1c5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="zhB-rc-BIN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="德国儿童" id="RPR-u7-CnO"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="LeftDistance" destination="wxW-3m-0tT" id="spY-3b-ij4"/>
-                        <outlet property="mainScroll" destination="2QU-SQ-nSm" id="4Uf-5b-6Uj"/>
-                        <outlet property="rightDistance" destination="Dxo-Nt-XUN" id="znT-LV-dIG"/>
+                        <outlet property="LeftDistance" destination="zhB-rc-BIN" id="SK8-q4-tZ6"/>
+                        <outlet property="mainTableView" destination="Z90-EQ-1c5" id="Crd-Iz-j8b"/>
+                        <outlet property="rightDistance" destination="px3-nD-R2q" id="tA8-06-ZLp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
