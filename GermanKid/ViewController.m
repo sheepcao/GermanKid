@@ -30,10 +30,11 @@
 @property (nonatomic, strong) menuSrollView *fakeScroll;
 
 
-@property (strong, nonatomic) KDCycleBannerView *cycleBannerViewTop;
 @property (nonatomic,strong) NSMutableArray *controllerArray;
 @property (nonatomic,strong) topBarView *topBar;
 @property (nonatomic,strong) UIView *headerView;
+
+
 @end
 
 @implementation ViewController
@@ -208,12 +209,17 @@ int menuNow;
 #pragma mark - KDCycleBannerViewDataSource
 
 - (NSArray *)numberOfKDCycleBannerView:(KDCycleBannerView *)bannerView {
+    NSArray *allBanner = [[NSUserDefaults standardUserDefaults] objectForKey:ALL_BANNER];
+    NSMutableArray *imageArray = [[NSMutableArray alloc] initWithCapacity:5];
+    for (int i = 0; i<allBanner.count; i++) {
+        NSString * bannerImage = [NSString stringWithFormat:@"http://cgx.nwpu.info/GermanKid/banners/%@.jpg",[allBanner[i] objectForKey:@"product_name"]];
+        NSURL *url = [NSURL URLWithString: [bannerImage stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        [imageArray insertObject:url atIndex:[[allBanner[i] objectForKey:@"banner_index"] integerValue]];
+    }
+    NSArray *banners = [[NSArray alloc] initWithArray:imageArray];
+    return banners;
     
-    return @[@"http://cgx.nwpu.info/GermanKid/banners/banner0.jpg",
-             @"http://cgx.nwpu.info/GermanKid/banners/banner1.jpg",
-             @"http://cgx.nwpu.info/GermanKid/banners/banner2.jpg",
-             @"http://cgx.nwpu.info/GermanKid/banners/banner3.jpg",
-             @"http://cgx.nwpu.info/GermanKid/banners/banner4.jpg"];
+
 }
 
 - (UIViewContentMode)contentModeForImageIndex:(NSUInteger)index {
@@ -232,11 +238,22 @@ int menuNow;
 #pragma mark - KDCycleBannerViewDelegate
 
 - (void)cycleBannerView:(KDCycleBannerView *)bannerView didScrollToIndex:(NSUInteger)index {
-    NSLog(@"didScrollToIndex~~~~~~~~~~:%ld", (long)index);
+//    NSLog(@"didScrollToIndex~~~~~~~~~~:%ld", (long)index);
 }
 
 - (void)cycleBannerView:(KDCycleBannerView *)bannerView didSelectedAtIndex:(NSUInteger)index {
     NSLog(@"didSelectedAtIndex:%ld", (long)index);
+    NSArray *allBanner = [[NSUserDefaults standardUserDefaults] objectForKey:ALL_BANNER];
+
+    NSString *productName = [allBanner[index] objectForKey:@"product_name"];
+    detailViewController *detailView = [[detailViewController alloc] initWithNibName:@"detailViewController" bundle:nil];
+    detailView.isFromBanner = YES;
+    detailView.name = productName;
+    
+    
+    [self.navigationController pushViewController:detailView  animated:YES];
+    
+    
 }
 
 
@@ -374,7 +391,7 @@ int menuNow;
     }
     
     [self.fakeScroll setupCategory:self.menuArray];
-    for (UIView *subview in [self.menuScroll subviews]) {
+    for (UIView *subview in [self.fakeScroll subviews]) {
         if ([subview isKindOfClass:[UIButton class]]) {
             UIButton *btn = (UIButton *)subview;
             
@@ -443,8 +460,6 @@ int menuNow;
             [cateView.secondBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
             [cateView.thirdBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
             [cateView.forthBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
             
         }
         
@@ -528,7 +543,16 @@ int menuNow;
     NSLog(@"product tapped:%lu",sender.tag);
     
     detailViewController *detailView = [[detailViewController alloc] initWithNibName:@"detailViewController" bundle:nil];
-    //    [self.view.window.rootViewController presentViewController:detailView animated:YES completion:nil];
+    detailView.isFromBanner = NO;
+
+    detailView.name = [self.prodsNow[sender.tag] objectForKey:@"name"];
+    detailView.likeCount = [self.prodsNow[sender.tag] objectForKey:@"like_count"];
+    detailView.price = [self.prodsNow[sender.tag] objectForKey:@"price"];
+    detailView.discount = [self.prodsNow[sender.tag] objectForKey:@"discount"];
+    detailView.productUrl = [self.prodsNow[sender.tag] objectForKey:@"url"];
+    detailView.imageCount = [self.prodsNow[sender.tag] objectForKey:@"image_count"];
+    detailView.introduct = [self.prodsNow[sender.tag] objectForKey:@"introduct"];
+
     
     [self.navigationController pushViewController:detailView  animated:YES];
 }

@@ -29,7 +29,7 @@
     self.topBar.alpha = 1.0f;
     
     UIButton *backBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 28, 40, 30)];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [backBtn setTitle:@"后退" forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backTap) forControlEvents:UIControlEventTouchUpInside];
     [self.topBar addSubview:backBtn];
     
@@ -49,8 +49,8 @@
     self.webview.scalesPageToFit = YES;
     
 
-    NSString *path = @"https://h5.m.taobao.com/awp/core/detail.htm?ft=t&id=524245383905";
-    NSURL *url = [[NSURL alloc] initWithString:path];
+//    NSString *path = @"https://h5.m.taobao.com/awp/core/detail.htm?ft=t&id=524245383905";
+    NSURL *url = [[NSURL alloc] initWithString:self.taobaoURL];
     [self.webview loadRequest:[NSURLRequest requestWithURL:url]];
     [self.view addSubview:self.webview];
     self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "globalVar.h"
+#import "AFHTTPRequestOperationManager.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UIAlertViewDelegate>
 
 @end
 
@@ -18,6 +20,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self requestSettingInfo];
+    
+    
+    
+    NSArray *allBanner = [[NSUserDefaults standardUserDefaults] objectForKey:ALL_BANNER];
+
+    if (!allBanner || allBanner.count == 0 ) {
+        NSArray *banners = @[@{@"banner_index":@"0",@"product_name":@"拼图游戏"},@{@"banner_index":@"1",@"product_name":@"秋千"}];
+        [[NSUserDefaults standardUserDefaults] setObject:banners forKey:ALL_BANNER];
+        
+    }
+    [self requestBannerInfo];
+
 
     return YES;
 }
@@ -43,5 +58,73 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+-(void)requestBannerInfo
+{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    [manager.requestSerializer setTimeoutInterval:12];  //Time out after 25 seconds
+    NSDictionary *parameters = @{@"tag": @"bannerInfo"};
+    
+    
+    [manager POST:bannerURL parameters:parameters success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSLog(@"prod Json: %@", responseObject);
+        
+        NSArray *banners = [responseObject objectForKey:@"banners"];
+        [[NSUserDefaults standardUserDefaults] setObject:banners forKey:ALL_BANNER];
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ups JsonError: %@", error.localizedDescription);
+        NSLog(@"ups Json ERROR: %@",  operation.responseObject);
+        
+        
+    }];
+    
+    
+}
+
+-(void)requestSettingInfo
+{
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    [manager.requestSerializer setTimeoutInterval:12];  //Time out after 25 seconds
+    NSDictionary *parameters = @{@"tag": @"settingInfo"};
+    
+    
+    [manager POST:settingURL parameters:parameters success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSLog(@"prod Json: %@", responseObject);
+        
+        NSString *message = [responseObject objectForKey:@"message"];
+        NSString *version = [responseObject objectForKey:@"version"];
+        
+        if (![version isEqualToString:VERSIONNUMBER]) {
+            UIAlertView *updateAlert = [[UIAlertView alloc] initWithTitle:@"新版本提醒" message:message delegate:self cancelButtonTitle:@"暂不" otherButtonTitles:@"升级", nil];
+            [updateAlert show];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ups JsonError: %@", error.localizedDescription);
+        NSLog(@"ups Json ERROR: %@",  operation.responseObject);
+        
+        
+    }];
+    
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:REVIEW_URL]];
+
+    }
+}
+
 
 @end

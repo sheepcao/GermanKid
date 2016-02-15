@@ -34,10 +34,16 @@
 #define ALLAPP_URL @"itms://itunes.apple.com/us/artist/cao-guangxu/id844914783"
 
 #define productURL @"http://localhost/~ericcao/GermanKidService/productInfo.php"
+#define bannerURL @"http://localhost/~ericcao/GermanKidService/bannerInfo.php"
+#define detailURL @"http://localhost/~ericcao/GermanKidService/detailInfo.php"
+#define settingURL @"http://localhost/~ericcao/GermanKidService/settingInfo.php"
+#define entireProductURL @"http://localhost/~ericcao/GermanKidService/entireProductInfo.php"
+
+
+#define BaseURL @"http://localhost/~ericcao/GermanKidService"
 
 
 #define VERSIONNUMBER   [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
-#define ADMOB_ID @"ca-app-pub-3074684817942615/4321450681"
 
 
 #import "UIImageView+AFNetworking.h"
@@ -46,6 +52,8 @@
 
 #define ALL_PRODUCT @"all_product"
 #define ALL_CATEGORY @"all_category"
+#define ALL_BANNER @"all_banner"
+
 
 #endif
 

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface taobaoViewController : UIViewController
-
+@property (nonatomic,strong) NSString *taobaoURL;
 @end

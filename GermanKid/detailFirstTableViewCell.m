@@ -12,6 +12,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [self.prodName setFont:[UIFont systemFontOfSize:15.0f weight:UIFontWeightLight]];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
