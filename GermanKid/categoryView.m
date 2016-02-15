@@ -24,7 +24,7 @@
 
 -(void)setupView:(CGRect)frame
 {
-    self.backgroundColor = [UIColor colorWithRed:242.0/255.0 green:242/255.0 blue:242/255.0 alpha:1.0];
+    self.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
 
     self.firstBtn = [[UIButton alloc] initWithFrame:CGRectMake((frame.size.width/4 - categoryBtnHeight)/2, (categoryViewHeight-categoryBtnHeight)/2, categoryBtnHeight, categoryBtnHeight)];
     self.firstBtn.layer.cornerRadius = self.firstBtn.frame.size.height/2;

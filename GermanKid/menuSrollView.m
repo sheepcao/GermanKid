@@ -16,7 +16,7 @@ double buttonWidth;
     self.showsHorizontalScrollIndicator = NO;
     self.showsVerticalScrollIndicator = NO;
     self.delaysContentTouches = YES;
-
+    
     for (int i = 0; i < categoryArray.count; i++) {
         buttonWidth =self.contentSize.width/categoryArray.count ;
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0+i*buttonWidth, 0,buttonWidth , self.contentSize.height)];
@@ -29,7 +29,7 @@ double buttonWidth;
         [self addSubview:button];
         
     }
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithRed:251.0/255.0 green:251/255.0 blue:251/255.0 alpha:1.0];
     
     
 }
@@ -42,15 +42,40 @@ double buttonWidth;
             
             if (subview.tag == page+100) {
                 
-                
                 UIButton *btn = (UIButton *)subview;
-                [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-
+                
+                
+                
                 if (page ==0) {
-                    [self setContentOffset:CGPointMake(0, 0)];
+//                    [UIView animateWithDuration:0.70f animations:^(void)
+//                     {
+//                         [self setContentOffset:CGPointMake(0, 0)];
+//                         
+//                     }];
+                    [UIView animateWithDuration:0.30f animations:^(void)
+                     {
+                         [self setContentOffset:CGPointMake(0, 0)];
+                         
+                     } completion:^(BOOL finished){
+                         
+                         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                     }];
                 }else
                 {
-                    [self setContentOffset:CGPointMake(buttonWidth*(page-1), 0)];
+//                    [UIView animateWithDuration:0.70f animations:^(void)
+//                     {
+//                         [self setContentOffset:CGPointMake(buttonWidth*(page-1), 0)];
+//                         
+//                     }];
+                    
+                    [UIView animateWithDuration:0.30f animations:^(void)
+                     {
+                         [self setContentOffset:CGPointMake(buttonWidth*(page-1), 0)];
+                         
+                     } completion:^(BOOL finished){
+                         
+                         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                     }];
                 }
                 
                 

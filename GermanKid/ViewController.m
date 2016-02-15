@@ -15,13 +15,16 @@
 #import "categoryView.h"
 #import "detailViewController.h"
 #import "taobaoViewController.h"
+#import "categoryDetailViewController.h"
 
 
 
-@interface ViewController ()<KDCycleBannerViewDataSource, KDCycleBannerViewDelegate,UIScrollViewDelegate>
+@interface ViewController ()<KDCycleBannerViewDataSource, KDCycleBannerViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *prodArray;
-@property (nonatomic, strong) NSArray *menuArray;
+@property (nonatomic, strong) NSMutableArray *prodsNow;
+
+@property (nonatomic, strong) NSMutableArray *menuArray;
 
 @property (nonatomic, strong) menuSrollView *menuScroll;
 @property (nonatomic, strong) menuSrollView *fakeScroll;
@@ -40,12 +43,32 @@ int menuNow;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([self loadCategoryDefault]) {
+        self.menuArray = [[NSMutableArray alloc] initWithArray:[self loadCategoryDefault]];
+        
+    }else
+    {
+        self.menuArray = [[NSMutableArray alloc] init];
+        
+    }
     
-    self.prodArray = [[NSMutableArray alloc] initWithObjects:@"prod1",@"prod2",@"prod3",@"prod4",nil];
-    
-    NSArray *menuTitles = @[@"menu1",@"menu2",@"menu3",@"menu4",@"menu5",@"menu6",@"menu7",@"menu8"];
-    self.menuArray = menuTitles;
+    if ([self loadProductDefault]) {
+        self.prodArray = [[NSMutableArray alloc] initWithArray:[self loadProductDefault]];
+        self.prodsNow = [[NSMutableArray alloc] initWithArray:[self sortProducts:self.prodArray ByCategory:self.menuArray[0]]];
 
+
+    }else
+    {
+        self.prodArray = [[NSMutableArray alloc] init];
+
+    }
+
+
+    [self requestAllProduct];
+
+//    NSArray *menuTitles = @[@"menu1",@"menu2",@"menu3",@"menu4",@"menu5",@"menu6",@"menu7",@"menu8"];
+//    self.menuArray = menuTitles;
+    
     self.navigationController.navigationBarHidden = YES;
     self.topBar = [[topBarView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     [self.topBar.pagetitle setText:@"德国儿童用品"];
@@ -53,11 +76,36 @@ int menuNow;
     [self.view addSubview:self.topBar];
     
     menuNow = 0;
-
-
     
-
+    [self.mainTableView addObserver: self forKeyPath: @"contentOffset" options: NSKeyValueObservingOptionNew context: nil];
+    
+    
+    
 }
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if (self.mainTableView.contentOffset.y<SCREEN_WIDTH/2+categoryViewHeight-44-44) {
+        
+        
+        
+        self.topBar.alpha = self.mainTableView.contentOffset.y/(SCREEN_WIDTH/2+categoryViewHeight-44-44);
+        
+        [self.fakeScroll setHidden:YES];
+        [self.menuScroll setHidden:NO];
+        
+        
+    }else
+    {
+        [self.fakeScroll setHidden:NO];
+        [self.menuScroll setHidden:YES];
+
+        self.topBar.alpha = 1.0f;
+    }
+    
+}
+
 
 -(void)viewDidLayoutSubviews
 {
@@ -68,18 +116,85 @@ int menuNow;
         [self.rightDistance setConstant:-20];
         [self.mainTableView setNeedsUpdateConstraints];
         
-
+        
         [self.view setNeedsUpdateConstraints];
         [self.view layoutIfNeeded];
-
+        
     }
+    
+}
 
+-(NSArray *)loadProductDefault
+{
+    NSArray *allProduct = [[NSUserDefaults standardUserDefaults] objectForKey:ALL_PRODUCT];
+    
+    return allProduct;
+}
+-(NSArray *)loadCategoryDefault
+{
+    NSArray *allCategory = [[NSUserDefaults standardUserDefaults] objectForKey:ALL_CATEGORY];
+    
+    return allCategory;
+}
+
+-(void)requestAllProduct
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+    [manager.requestSerializer setTimeoutInterval:12];  //Time out after 25 seconds
+    NSDictionary *parameters = @{@"tag": @"productInfo",@"menu":@"main"};
+
+    
+    [manager POST:productURL parameters:parameters success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+        NSLog(@"prod Json: %@", responseObject);
+        
+        NSArray *oneProd = [responseObject objectForKey:@"products"];
+        [self.prodArray setArray:oneProd];
+        [[NSUserDefaults standardUserDefaults] setObject:self.prodArray forKey:ALL_PRODUCT];
+    
+        //categories
+        NSArray *categories = [responseObject objectForKey:@"categories"];
+        [self.menuArray setArray:categories];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self.menuArray forKey:ALL_CATEGORY];
+        
+        [self reloadCategories];
+        
+
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"ups JsonError: %@", error.localizedDescription);
+        NSLog(@"ups Json ERROR: %@",  operation.responseObject);
+        
+        
+    }];
+    
+
+}
+
+
+
+-(NSMutableArray *)sortProducts:(NSArray *)array ByCategory:(NSString *)key
+{
+    NSMutableArray *productsNow = [[NSMutableArray alloc] init];
+    
+    if (array && key) {
+        for (NSDictionary *oneProd in array) {
+            if ([[oneProd objectForKey:@"category"] isEqualToString:key]) {
+                [productsNow addObject:oneProd];
+            }
+        }
+    }
+    
+    return productsNow;
 }
 
 -(void)categoryTap:(UIButton *)sender
 {
-    detailViewController *detailVC = [[detailViewController alloc] initWithNibName:@"detailViewController" bundle:nil];
-    [self.navigationController pushViewController:detailVC animated:YES];
+    categoryDetailViewController *categoryDetailVC = [[categoryDetailViewController alloc] initWithNibName:@"categoryDetailViewController" bundle:nil];
+    [self.navigationController pushViewController:categoryDetailVC animated:YES];
     
 }
 
@@ -94,20 +209,25 @@ int menuNow;
 
 - (NSArray *)numberOfKDCycleBannerView:(KDCycleBannerView *)bannerView {
     
-    return @[[UIImage imageNamed:@"image1.jpg"],
-             [UIImage imageNamed:@"image2.png"],
-             @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=5ad7fab780025aafd33279cbcfd5aa64/8601a18b87d6277f15eb8e4f2a381f30e824fcc8.jpg",
-             @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=df5d0b61cdfc1e17fdbf8b317ea8f703/0bd162d9f2d3572c8d2b20ab8813632763d0c3f8.jpg",
-             @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=a11d7b94552c11dfded1b823571f63d0/eaf81a4c510fd9f914eee91e272dd42a2934a4c8.jpg"];
+    return @[@"http://cgx.nwpu.info/GermanKid/banners/banner0.jpg",
+             @"http://cgx.nwpu.info/GermanKid/banners/banner1.jpg",
+             @"http://cgx.nwpu.info/GermanKid/banners/banner2.jpg",
+             @"http://cgx.nwpu.info/GermanKid/banners/banner3.jpg",
+             @"http://cgx.nwpu.info/GermanKid/banners/banner4.jpg"];
 }
 
 - (UIViewContentMode)contentModeForImageIndex:(NSUInteger)index {
     return UIViewContentModeScaleAspectFill;
 }
 
-- (UIImage *)placeHolderImageOfZeroBannerView {
-    return [UIImage imageNamed:@"image1"];
+
+- (UIImage *)placeHolderImageOfBannerView:(KDCycleBannerView *)bannerView atIndex:(NSUInteger)index;
+{
+
+    return [UIImage imageNamed:@"networkError.png"];
+
 }
+
 
 #pragma mark - KDCycleBannerViewDelegate
 
@@ -127,9 +247,9 @@ int menuNow;
 {    if (indexPath.section ==0) {
     return SCREEN_WIDTH/2+categoryViewHeight;
 }else
-{
-    return SCREEN_WIDTH/2+70;
-}
+    {
+        return SCREEN_WIDTH/2+56;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -163,12 +283,12 @@ int menuNow;
         return nil;
     }else if (section == 1)
     {
-       
         
-
+        
+        
         if (!self.headerView) {
             self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-
+            
             self.menuScroll = [[menuSrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
             self.menuScroll.contentSize=CGSizeMake(700,40);
             
@@ -187,10 +307,9 @@ int menuNow;
             
             [self.headerView addSubview:self.menuScroll];
             [self.menuScroll scrollToPage:menuNow];
-
+            
             
         }
-
         if (!self.fakeScroll) {
             
             self.fakeScroll = [[menuSrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 40)];
@@ -211,15 +330,67 @@ int menuNow;
             [self.view addSubview:self.fakeScroll];
             [self.fakeScroll setHidden:YES];
             [self.fakeScroll scrollToPage:menuNow];
-
+            
         }
-    
-
+        
         
         
         return self.headerView;
     }else
-        return nil;
+    return nil;
+}
+
+-(void)reloadCategories
+{
+    menuNow = 0;
+    
+    for (UIView *subview in [self.menuScroll subviews]) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)subview;
+            [btn removeFromSuperview];
+            
+        }
+    }
+    
+    [self.menuScroll setupCategory:self.menuArray];
+    for (UIView *subview in [self.menuScroll subviews]) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)subview;
+            
+            [btn addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+    }
+    
+    [self.menuScroll scrollToPage:menuNow];
+    
+    
+    for (UIView *subview in [self.fakeScroll subviews]) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)subview;
+            [btn removeFromSuperview];
+            
+        }
+    }
+    
+    [self.fakeScroll setupCategory:self.menuArray];
+    for (UIView *subview in [self.menuScroll subviews]) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *btn = (UIButton *)subview;
+            
+            [btn addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventTouchUpInside];
+            
+        }
+    }
+    
+    [self.fakeScroll scrollToPage:menuNow];
+    
+    self.prodsNow = [[NSMutableArray alloc] initWithArray:[self sortProducts:self.prodArray ByCategory:self.menuArray[0]]];
+
+    
+    NSIndexSet *indexSet1 = [[NSIndexSet alloc] initWithIndex: 1];
+    [self.mainTableView reloadSections:indexSet1 withRowAnimation:UITableViewRowAnimationFade];
+    
 }
 
 -(void)segmentedControlChangedValue:(UIButton *)sender
@@ -228,10 +399,18 @@ int menuNow;
     menuNow =sender.tag - 100;
     [self.menuScroll scrollToPage:(sender.tag - 100)];
     [self.fakeScroll scrollToPage:(sender.tag - 100)];
+    
+    self.prodsNow = [[NSMutableArray alloc] initWithArray:[self sortProducts:self.prodArray ByCategory:self.menuArray[menuNow]]];
+
+    
     NSRange range = NSMakeRange(1, [self numberOfSectionsInTableView:self.mainTableView]-1);
     NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
     [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
 
+    if (self.mainTableView.contentOffset.y >= (SCREEN_WIDTH/2+categoryViewHeight-44-40)) {
+        [self.mainTableView setContentOffset:CGPointMake(0, SCREEN_WIDTH/2+categoryViewHeight-44-40)];
+
+    }
     
 }
 
@@ -240,7 +419,8 @@ int menuNow;
         return 1;
     }else
     {
-        return self.prodArray.count;
+        return self.prodsNow.count%2 == 0?self.prodsNow.count/2:self.prodsNow.count/2+1;
+        
     }
 }
 
@@ -263,8 +443,8 @@ int menuNow;
             [cateView.secondBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
             [cateView.thirdBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
             [cateView.forthBtn addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
-
-
+            
+            
             
         }
         
@@ -289,92 +469,114 @@ int menuNow;
             [self.view addGestureRecognizer:rightSwipeGestureRecognizer];
         }
         
+        
+        NSDictionary *firstProduct = self.prodsNow[2*indexPath.row];
+        if (2*indexPath.row+1<self.prodsNow.count) {
+            NSDictionary *secondProduct = self.prodsNow[2*indexPath.row+1];
+            NSString *prodNameTwo = [secondProduct objectForKey:@"name"];
+            NSString *prodTwoLike = [secondProduct objectForKey:@"like_count"];
+            
+            [prodCell.prodTwoLikeNumber setText:prodTwoLike];
+            [prodCell.prodNameTwo setText:prodNameTwo];
 
+            [prodCell.productImageTwo setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",prodNameTwo]]];
+            [prodCell.prodButtonTwo addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
+            prodCell.prodButtonTwo.tag = indexPath.row*2+1;
+            [prodCell.productImageTwo.superview setHidden:NO];
+
+
+        }else
+        {
+            [prodCell.productImageTwo.superview setHidden:YES];
+        }
+
+        NSString *prodNameOne = [firstProduct objectForKey:@"name"];
+        NSString *prodOneLike = [firstProduct objectForKey:@"like_count"];
         
-        NSString *prodName = [NSString stringWithFormat:@"%@.jpg",self.prodArray[indexPath.row]];
-        
-        [prodCell.productImageOne setImage:[UIImage imageNamed:prodName]];
+        [prodCell.prodOneLikeNumber setText:prodOneLike];
+        [prodCell.prodNameOne setText:prodNameOne];
+        [prodCell.productImageOne setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.jpg",prodNameOne]]];
         [prodCell.prodButtonOne addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
         prodCell.prodButtonOne.tag = indexPath.row*2;
         
-        [prodCell.productImageTwo setImage:[UIImage imageNamed:prodName]];
-        [prodCell.prodButtonTwo addTarget:self action:@selector(prodTapped:) forControlEvents:UIControlEventTouchUpInside];
-        prodCell.prodButtonTwo.tag = indexPath.row*2+1;
+       
+        
+        UIView *dismissingView = [[UIView alloc] initWithFrame:prodCell.frame];
+        dismissingView.backgroundColor = [UIColor whiteColor];
+        dismissingView.alpha = 0.8f;
+        [prodCell addSubview:dismissingView];
+        
+        
+        [UIView animateWithDuration:0.85f animations:^(void){
+            
+            dismissingView.alpha = 0.0f;
+            
+        } completion:^(BOOL isfinished){
+            
+            [dismissingView removeFromSuperview];
+        
+        }];
+        
         
         return prodCell;
     }
-
+    
 }
 -(void)prodTapped:(UIButton *)sender
 {
     
     NSLog(@"product tapped:%lu",sender.tag);
     
-    taobaoViewController *taobaoView = [[taobaoViewController alloc] initWithNibName:@"taobaoViewController" bundle:nil];
-    [self.view.window.rootViewController presentViewController:taobaoView animated:YES completion:nil];
+    detailViewController *detailView = [[detailViewController alloc] initWithNibName:@"detailViewController" bundle:nil];
+    //    [self.view.window.rootViewController presentViewController:detailView animated:YES completion:nil];
     
-    //    [self.navigationController pushViewController:taobaoView animated:YES];
+    [self.navigationController pushViewController:detailView  animated:YES];
 }
 
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
-//    [self.mainTableView reloadData];
+    //    [self.mainTableView reloadData];
     NSRange range = NSMakeRange(1, [self numberOfSectionsInTableView:self.mainTableView]-1);
     NSIndexSet *sections = [NSIndexSet indexSetWithIndexesInRange:range];
-
+    
     if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
         if (menuNow<self.menuArray.count-1) {
             [self.menuScroll scrollToPage:(menuNow +1)];
             [self.fakeScroll scrollToPage:(menuNow +1)];
             menuNow++;
+            self.prodsNow = [[NSMutableArray alloc] initWithArray:[self sortProducts:self.prodArray ByCategory:self.menuArray[menuNow]]];
+
             [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
-
-
+            if (self.mainTableView.contentOffset.y >= (SCREEN_WIDTH/2+categoryViewHeight-44-40)) {
+                [self.mainTableView setContentOffset:CGPointMake(0, SCREEN_WIDTH/2+categoryViewHeight-44-40)];
+                
+            }
+            
         }
         
-
+        
     }
     
     if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
-       
+        
         if (menuNow>0) {
             [self.menuScroll scrollToPage:(menuNow -1)];
             [self.fakeScroll scrollToPage:(menuNow- 1)];
             menuNow--;
-            [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
+            self.prodsNow = [[NSMutableArray alloc] initWithArray:[self sortProducts:self.prodArray ByCategory:self.menuArray[menuNow]]];
 
+            [self.mainTableView reloadSections:sections withRowAnimation:UITableViewRowAnimationFade];
+            if (self.mainTableView.contentOffset.y >= (SCREEN_WIDTH/2+categoryViewHeight-44-40)) {
+                [self.mainTableView setContentOffset:CGPointMake(0, SCREEN_WIDTH/2+categoryViewHeight-44-40)];
+                
+            }
         }
         
     }
     
 }
-
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+-(void)dealloc
 {
-
-
-    if (scrollView.contentOffset.y<SCREEN_WIDTH/2+categoryViewHeight-44-40) {
-        
-    
-        
-              self.topBar.alpha = scrollView.contentOffset.y/(SCREEN_WIDTH/2+categoryViewHeight-44-40);
-
-        [self.fakeScroll setHidden:YES];
-
-        
-    }else
-    {
-        [self.fakeScroll setHidden:NO];
-               self.topBar.alpha = 1.0f;
-    }
+    [self.mainTableView removeObserver:self forKeyPath:@"contentOffset"];
 }
-
-//
-//-(void)enableScroll
-//{
-//    [self.mainScroll setScrollEnabled:YES];
-//
-//}
-
 @end
